@@ -1,2 +1,6 @@
 # Project exclude paths
-/target/
+target
+derby.log
+.idea
+db_road_accidents
+*.iml
