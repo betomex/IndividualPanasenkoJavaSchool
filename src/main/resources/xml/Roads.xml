@@ -1,0 +1,27 @@
+<roads>
+    <road>
+        <street>Улица 1</street>
+        <timestamp>2020-11-27 08:00</timestamp>
+        <trafficLevel>9</trafficLevel>
+    </road>
+    <road>
+        <street>Улица 2</street>
+        <timestamp>2020-11-27 10:00</timestamp>
+        <trafficLevel>6</trafficLevel>
+    </road>
+    <road>
+        <street>Улица 3</street>
+        <timestamp>2020-11-27 12:00</timestamp>
+        <trafficLevel>6</trafficLevel>
+    </road>
+    <road>
+        <street>Улица 2</street>
+        <timestamp>2020-11-27 18:00</timestamp>
+        <trafficLevel>9</trafficLevel>
+    </road>
+    <road>
+        <street>Улица 3</street>
+        <timestamp>2020-11-27 23:00</timestamp>
+        <trafficLevel>3</trafficLevel>
+    </road>
+</roads>
