@@ -1,9 +1,9 @@
 package deserialization.converter;
 
-import deserialization.deserialized_objects.Accident;
-import deserialization.deserialized_objects.Accidents;
-import deserialization.deserialized_objects.Road;
-import deserialization.deserialized_objects.Roads;
+import model.Accident;
+import deserialization.lists.Accidents;
+import model.Road;
+import deserialization.lists.Roads;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,7 @@ import java.util.List;
  * Тестирование корректности десериализации списков объектов Road и Accident
  */
 public class JacksonConverterTest {
-    private static final String XML_DIRECTORY = "src/main/resources/xml";
+    private static final String XML_DIRECTORY = "src/test/resources/xml";
     private Road road1;
     private Road road2;
     private Accident accident1;
@@ -50,8 +50,8 @@ public class JacksonConverterTest {
         JacksonConverter converter = new JacksonConverter();
         Path roadsPath = Paths.get(XML_DIRECTORY, "TestRoads.xml");
         Path accidentsPath = Paths.get(XML_DIRECTORY, "TestAccidents.xml");
-        String roadsXml = Files.readString(roadsPath);
-        String accidentsXml = Files.readString(accidentsPath);
+        String roadsXml = String.join("\n", Files.readAllLines(roadsPath));
+        String accidentsXml = String.join("\n", Files.readAllLines(accidentsPath));
 
         List<Road> roads1 = Arrays.asList(road1, road2);
         List<Accident> accidents1 = Arrays.asList(accident1, accident2);

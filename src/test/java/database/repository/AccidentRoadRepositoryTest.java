@@ -1,11 +1,8 @@
 package database.repository;
 
-import database.model.AccidentRoad;
 import database.provider.DataSourceProvider;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import model.AccidentRoad;
+import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -14,44 +11,63 @@ import java.util.List;
 /**
  * Тестирование работы с БД
  */
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AccidentRoadRepositoryTest {
-    private AccidentRoadRepository repository;
-    private AccidentRoad accidentRoad1;
-    private AccidentRoad accidentRoad2;
 
-    @BeforeEach
-    public void init() throws IOException {
+    private AccidentRoadRepository repository;
+    private AccidentRoad accidentRoad1 = new AccidentRoad(
+            "Улица 1",
+            LocalDateTime.of(2020, 11, 27, 10, 0),
+            6,
+            2
+    );
+
+    public AccidentRoadRepositoryTest() throws IOException {
         DataSourceProvider dataSourceProvider = new DataSourceProvider();
         repository = new AccidentRoadRepository(dataSourceProvider.getDataSource());
-        accidentRoad1 = new AccidentRoad(
-                1,
-                "Улица 2",
-                LocalDateTime.of(2020, 11, 27, 10, 0),
-                6,
-                2);
-        accidentRoad2 = new AccidentRoad(
-                2,
-                "Улица 3",
-                LocalDateTime.of(2020, 11,27,23,0),
-                2,
-                3);
-    }
-
-    @AfterEach
-    public void clear() {
-        repository.dropTable();
     }
 
     @Test
-    public void testAddDataIntoDb() {
-        repository.add(accidentRoad1);
+    @Order(1)
+    public void testCreateNew() {
         List<AccidentRoad> accidentRoads = repository.findAll();
-        Assertions.assertEquals(1, accidentRoads.size());
-        Assertions.assertEquals(accidentRoad1, accidentRoads.get(0));
-
-        repository.add(accidentRoad2);
+        int initialSize = accidentRoads.size();
+        repository.createNew(accidentRoad1);
         accidentRoads = repository.findAll();
-        Assertions.assertEquals(2, accidentRoads.size());
-        Assertions.assertEquals(accidentRoad2, accidentRoads.get(1));
+        Assertions.assertEquals(initialSize + 1, accidentRoads.size());
+    }
+
+    @Test
+    @Order(2)
+    public void testFindById() {
+        List<AccidentRoad> accidentRoads = repository.findAll();
+        AccidentRoad checkedObject = repository.findById(accidentRoads.get(0).getId());
+        Assertions.assertEquals(accidentRoads.get(0), checkedObject);
+    }
+
+    @Test
+    @Order(3)
+    public void testUpdate() {
+        List<AccidentRoad> accidentRoads = repository.findAll();
+        AccidentRoad checkedObject = repository.findById(accidentRoads.get(0).getId());
+        int initialVehicles = checkedObject.getVehicles();
+        checkedObject.setVehicles(10);
+        repository.update(checkedObject);
+        checkedObject = repository.findById(accidentRoads.get(0).getId());
+        Assertions.assertNotEquals(initialVehicles, checkedObject.getVehicles());
+    }
+
+    @Test
+    @Order(4)
+    public void testDelete() {
+        List<AccidentRoad> accidentRoadList = repository.findAll();
+        if (!accidentRoadList.isEmpty()) {
+            AccidentRoad checkedObject = accidentRoadList.get(0);
+            int initialSize = accidentRoadList.size();
+            repository.delete(checkedObject.getId());
+            accidentRoadList = repository.findAll();
+            Assertions.assertEquals(initialSize - 1, accidentRoadList.size());
+            Assertions.assertFalse(accidentRoadList.contains(checkedObject));
+        }
     }
 }

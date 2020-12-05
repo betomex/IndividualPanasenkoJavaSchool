@@ -1,4 +1,4 @@
-package database.model;
+package model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -7,6 +7,8 @@ import java.util.Objects;
  * Состояние траффика на дороге, где произошло ДТП, в данный момент времени
  */
 public class AccidentRoad {
+
+    private static final String TABLE_NAME = "accident_road";
 
     /**
      * Айди
@@ -32,6 +34,13 @@ public class AccidentRoad {
      * Количество участников ДТП
      */
     private Integer vehicles;
+
+    public AccidentRoad(String street, LocalDateTime timestamp, Integer trafficLevel, Integer vehicles) {
+        this.street = street;
+        this.timestamp = timestamp;
+        this.trafficLevel = trafficLevel;
+        this.vehicles = vehicles;
+    }
 
     /**
      * Состояние траффика на дороге, где произошло ДТП, в данный момент времени
@@ -67,6 +76,14 @@ public class AccidentRoad {
 
     public Integer getVehicles() {
         return vehicles;
+    }
+
+    public void setVehicles(Integer vehicles) {
+        this.vehicles = vehicles;
+    }
+
+    public static String getTableName() {
+        return TABLE_NAME;
     }
 
     @Override

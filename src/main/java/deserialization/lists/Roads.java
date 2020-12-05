@@ -1,7 +1,8 @@
-package deserialization.deserialized_objects;
+package deserialization.lists;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import model.Road;
 
 import java.util.List;
 

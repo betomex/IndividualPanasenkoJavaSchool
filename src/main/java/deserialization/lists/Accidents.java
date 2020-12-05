@@ -1,8 +1,9 @@
-package deserialization.deserialized_objects;
+package deserialization.lists;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import model.Accident;
 
 import java.util.List;
 

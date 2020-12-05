@@ -1,8 +1,8 @@
 package combine;
 
-import database.model.AccidentRoad;
-import deserialization.deserialized_objects.Accident;
-import deserialization.deserialized_objects.Road;
+import model.AccidentRoad;
+import model.Accident;
+import model.Road;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +11,6 @@ import java.util.List;
  * Поиск списка состояний траффика на дороге в момент ДТП
  */
 public class RoadAccidentCombiner {
-
-    /**
-     * Счётчик объектов
-     */
-    private static int idCounter = 1;
 
     /**
      * Список улиц с траффиком
@@ -52,7 +47,6 @@ public class RoadAccidentCombiner {
             for (Accident accident: accidents) {
                 if (checkStreetAndTimeStamp(road, accident)) {
                     targetList.add(new AccidentRoad(
-                            idCounter++,
                             road.getStreet(),
                             road.getTimestamp(),
                             road.getTrafficLevel(),

@@ -18,7 +18,7 @@ public class DataSourceProvider {
     private EmbeddedDataSource dataSource;
 
     /**
-     * Настройки для нашей дб из settings.properties
+     * Настройки для нашей дб из application.properties
      */
     private Map<String, String> properties = new HashMap<>();
 
@@ -38,7 +38,7 @@ public class DataSourceProvider {
         Properties properties = new Properties();
         try {
             properties.load(
-                    Thread.currentThread().getContextClassLoader().getResourceAsStream("settings.properties"));
+                    Thread.currentThread().getContextClassLoader().getResourceAsStream("application.properties"));
             for (Map.Entry<Object, Object> entry: properties.entrySet()) {
                 this.properties.put((String) entry.getKey(), (String) entry.getValue());
             }
@@ -55,8 +55,8 @@ public class DataSourceProvider {
     public EmbeddedDataSource getDataSource() {
         if (dataSource == null) {
             dataSource = new EmbeddedDataSource();
-            dataSource.setUser("");
-            dataSource.setPassword("");
+            dataSource.setUser(properties.get("username"));
+            dataSource.setPassword(properties.get("password"));
             dataSource.setDatabaseName(properties.get("dbname"));
             dataSource.setCreateDatabase("create");
         }
